@@ -19,7 +19,7 @@ import imgHead from "../assets/img/photos-head.png";
 import imgAtivitadeEscolar from "../assets/img/atividade-escolar.png";
 import imgSaveAtivitade from "../assets/img/floppy-disk.png";
 import imgSalaGoogle from "../assets/img/google-meet.jpg";
-import imgSalaVideo from "../assets/img/Projector.jpg";
+import imgSalaVideo from "../assets/img/projector.jpg";
 import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
 import imgBrinquedoteca from "../assets/img/brinquedoteca.jpg";
 
