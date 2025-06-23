@@ -70,7 +70,8 @@ function CalendarWeek() {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [formData, setFormData] = useState<Activity>({ classe:'', risorse:'', spazio:'Brinquedoteca' });
   const [showModal, setShowModal] = useState(false);
-
+  // stato alert
+  const [alert, setAlert] = useState<{type: "success" | "danger" | "warning", message: string} | null>(null);
 
   // Caricamento dati settimana e contatori
   useEffect(() => {
@@ -155,12 +156,18 @@ function CalendarWeek() {
     }
     try {
       await axios.post(`${API_URL}/${numericOffset}`, { activities });
-      alert("Attività salvate con successo!");
+      setAlert({ type: "success", message: "Attività e contatori salvati con successo!" });
+       // nascondi alert dopo 3 secondi
+      setTimeout(() => setAlert(null), 3000);
+      // alert("Attività salvate con successo!");
       await axios.post(`${API_URL}/counters/${CURRENT_YEAR}`, counters);
-      alert("Attività e contatori salvati con successo!");
+      // alert("Attività e contatori salvati con successo!");
     } catch(err) {
       console.error("Errore nel salvataggio:", err);
-      alert("Errore durante il salvataggio.");
+       setAlert({ type: "danger", message: "Errore durante il salvataggio." });
+
+      setTimeout(() => setAlert(null), 3000);
+      // alert("Errore durante il salvataggio.");
     }
   };
 
