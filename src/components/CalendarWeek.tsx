@@ -295,6 +295,18 @@ function CalendarWeek() {
           alt="save-ativitade"
           onClick={handleSave}
         />
+        {/* Alert dinamico */}
+        {alert && (
+        <div className={`alert alert-${alert.type} alert-dismissible fade show mt-3`} role="alert">
+          {alert.message}
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => setAlert(null)}
+          ></button>
+        </div>
+      )}
         <p style={{ marginTop: 8, fontFamily:"Indie Flower, cursive", fontSize: 20, fontWeight: 800}}>Salvar atividades</p>
       </div>
 
