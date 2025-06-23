@@ -187,7 +187,7 @@ function CalendarWeek() {
   return (
     <div className="container">
       <div>
-        <img style={{width:420, marginTop: -50}} src={imgHead} alt="head" />
+        <img style={{ maxWidth: "100%", width:420, marginTop: -50}} src={imgHead} alt="head" />
       </div>
       <div className='title-calendar'>
         Escola Municipal<br />Augusto Dos Anjos
