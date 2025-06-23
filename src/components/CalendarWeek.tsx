@@ -150,8 +150,11 @@ function CalendarWeek() {
   
   //handleSave
     const handleSave = async () => {
-    if (!activities || Object.keys(activities).length === 0) {
-      alert("Nessuna attività da salvare.");
+      if (!activities || Object.keys(activities).length === 0) {
+       setAlert({ type: "warning", message: "Nessuna attività da salvare." });
+       // nascondi alert dopo 3 secondi
+      setTimeout(() => setAlert(null), 3000);
+      // alert("Nessuna attività da salvare.");
       return;
     }
     try {
