@@ -192,19 +192,20 @@ function CalendarWeek() {
       <div className='title-calendar'>
         Escola Municipal<br />Augusto Dos Anjos
       </div>
-      <div className='sub-title-calendar'>Atividades Escolares</div>
-      <img className='img-augusto' src={imgAugusto} alt="augusto" />
-      <div style={{marginTop: -150}}>
-        <img className="img-prato" src={imgPrato} alt="prato" />
-      </div> 
-      
-      <div className="d-flex justify-content-between align-items-center mb-3" style={{marginTop:100}}>
+        <div className='sub-title-calendar'>Atividades Escolares</div>
+        <div className='augusto-prato'>
+          <img className='img-augusto' src={imgAugusto} alt="augusto" />
+          <div style={{marginTop: -150}}>
+          <img className="img-prato" src={imgPrato} alt="prato" />
+        </div> 
+      </div>
+      <div className="d-flex justify-content-between align-items-center mb-3" style={{marginTop:450}}>
         <img src={imgArrow} alt="precendente" className='buttonWeekLeft' onClick={() => navigate(`/settimana/${numericOffset-1}`)} />
         <h5 className="scroll-week mb-0">Semana <strong style={{color:"red"}}>de</strong> {start} <strong style={{color:"red"}}>a</strong> {end}</h5>
         <img src={imgArrow} alt="successivo" className='buttonWeekRight' onClick={() => navigate(`/settimana/${numericOffset+1}`)} />
       </div>
 
-      <div className="table-responsive">
+      <div className="table-responsive"  style={{marginTop:40}}>
         <table className="table table-bordered text-center align-middle" style={{ minWidth: '800px' }}>
           <thead>
             <tr>
@@ -307,19 +308,18 @@ function CalendarWeek() {
           ></button>
         </div>
       )}
-        <p style={{ marginTop: 8, fontFamily:"Indie Flower, cursive", fontSize: 20, fontWeight: 800}}>Salvar atividades</p>
       </div>
 
       <div className="mt-5">
-        <h6 className='allan-bold' style={{ textTransform: 'uppercase' }}>
+        <h6 className='contador-espacos' style={{ textTransform: 'uppercase' }}>
           Contador de uso dos espaços <br /> (anual)
         </h6>
         <ul className="list-group mt-4">
           {(Object.keys(counters) as Spazio[]).map((space) => (
-            <li key={space} className="list-group-item d-flex justify-content-between align-items-center">
+            <li key={space} className="list-group-item d-flex justify-content-between align-items-center" style={{ fontFamily: 'Allan'}}>
               <div className="d-flex align-items-center gap-2">
                 <img src={icons[space]} alt={space} style={{ width: 100, height: 80, borderRadius: '10%' }}/>
-                <span>{space}</span>
+                <span style={{fontSize: 22}}>{space}</span>
               </div>
               <span style={{ fontSize: '2.0rem' }}>
                 {counters[space] || 0}</span>

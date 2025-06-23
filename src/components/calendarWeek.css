@@ -13,8 +13,9 @@
 }
 
 .scroll-week {
-    font-family: "'Allan', cursive";
+    font-family: 'Allan', cursive;
     font-weight: 700;
+    font-size: 26px;
 }
 
 .ativitade-escolar {
@@ -23,15 +24,35 @@
     border-radius: 50%;
 }
 
+
+@keyframes movimento-augusto {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.augusto-prato {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .img-augusto {
+    position: absolute;
+    margin-top: 70px;
     height: 350px;
     width: 300px;
-    margin-top: 70px;
+    z-index: 1;
+    animation: movimento-augusto 2s ease-in-out infinite;
+    transition: transform 0.3s ease-in-out;
 }
 
 .img-prato {
+    position: relative;
+    top: 415px;
     height: 200px;
     width: 400px;
+    z-index: 2;
 }
 
 .buttonWeekLeft {
@@ -62,6 +83,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.contador-espacos {
+    font-family: 'Allan', cursive;
+    font-weight: 700;
+    font-size: 26px;
 }
 
 /* CSS FLOPPY DISK */
