@@ -159,7 +159,7 @@ function CalendarWeek() {
     }
     try {
       await axios.post(`${API_URL}/${numericOffset}`, { activities });
-      setAlert({ type: "success", message: "Attività e contatori salvati con successo!" });
+      setAlert({ type: "success", message: "Atividades e contadores salvos com sucesso!" });
        // nascondi alert dopo 3 secondi
       setTimeout(() => setAlert(null), 3000);
       // alert("Attività salvate con successo!");
