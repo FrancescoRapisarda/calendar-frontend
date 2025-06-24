@@ -12,8 +12,8 @@
       "type": "image/png"
     },
     {
-      "src": "public/app-icon-big.png",
-      "sizes": "1024x1536",
+      "src": "public/app-icon.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
