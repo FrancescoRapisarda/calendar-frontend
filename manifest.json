@@ -13,7 +13,7 @@
     },
     {
       "src": "public/app-icon.png",
-      "sizes": "512x512",
+      "sizes": "1024x1536",
       "type": "image/png"
     }
   ]
