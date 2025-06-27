@@ -21,7 +21,7 @@ import imgSaveAtivitade from "../assets/img/floppy-disk.png";
 import imgSalaGoogle from "../assets/img/google-meet.jpg";
 import imgSalaVideo from "../assets/img/projector.jpg";
 import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
-import imgBrinquedoteca from "../assets/img/brinquedoteca.jpg";
+// import imgBrinquedoteca from "../assets/img/brinquedoteca.jpg";
 
 // Costanti
 // const API_URL = "http://localhost:4000/api/weeks";
@@ -42,7 +42,7 @@ const spaceData = [
   { name: "Sala Google", icon: imgSalaGoogle },
   { name: "Sala de Video", icon: imgSalaVideo },
   { name: "Atelier Criativo", icon: imgAtelieCriativo },
-  { name: "Brinquedoteca", icon: imgBrinquedoteca },
+  // { name: "Brinquedoteca", icon: imgBrinquedoteca },
 ] as const;
 
 
@@ -53,7 +53,7 @@ const icons: Record<Space, string> = Object.fromEntries(spaceData.map(s => [s.na
 
 
 type UserRole = 'admin' | 'docente';
-type Spazio = "Brinquedoteca" | "Sala Google" | "Sala de Video" | "Atelier Criativo";
+type Spazio = "Sala Google" | "Sala de Video" | "Atelier Criativo";
 type Activity = { classe: string; risorse: string; spazio: Spazio};
 type ActivityMap = {[slot: string]: Activity;};
 
@@ -68,7 +68,7 @@ function CalendarWeek() {
   const [activities, setActivities] = useState<ActivityMap>({} as ActivityMap);
   const [counters, setCounters] = useState<SpaceCounters>({} as SpaceCounters);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-  const [formData, setFormData] = useState<Activity>({ classe:'', risorse:'', spazio:'Brinquedoteca' });
+  const [formData, setFormData] = useState<Activity>({ classe:'', risorse:'', spazio:'Sala Google' });
   const [showModal, setShowModal] = useState(false);
   // stato alert
   const [alert, setAlert] = useState<{type: "success" | "danger" | "warning", message: string} | null>(null);

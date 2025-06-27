@@ -1,5 +1,5 @@
 export interface SpaceCounters {
-    "Brinquedoteca": number;
+    // "Brinquedoteca": number;
     "Sala Google": number;
     "Sala de Video": number;
     "Atelier Criativo": number;
