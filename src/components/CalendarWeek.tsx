@@ -21,7 +21,7 @@ import imgSaveAtivitade from "../assets/img/floppy-disk.png";
 import imgSalaGoogle from "../assets/img/google-meet.jpg";
 import imgSalaVideo from "../assets/img/projector.jpg";
 import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
-// import imgBrinquedoteca from "../assets/img/brinquedoteca.jpg";
+
 
 // Costanti
 // const API_URL = "http://localhost:4000/api/weeks";
@@ -30,19 +30,19 @@ const CURRENT_YEAR = new Date().getFullYear();
 const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
 const timeSlots = ['07:20', '08:10', '09:00', '09:20', '10:10', '11:00', '13:10', '14:00', '14:50', '15:10', '16:00'];
 const classes = [
-  "PRE' I", "PRE' II", "1º ANO A", "1º ANO B", "1º ANO C", "1º ANO D", "1º ANO E",
-  "2º ANO A", "2º ANO B", "2º ANO C", "2º ANO D", "2º ANO E",
-  "3º ANO A", "3º ANO B", "3º ANO C", "3º ANO D", "3º ANO E",
-  "4º ANO A", "4º ANO B", "4º ANO C", "4º ANO D", "4º ANO E",
-  "5º ANO A", "5º ANO B", "5º ANO C", "5º ANO D", "5º ANO E"
+  "PRE' I", "PRE' II", "PRE MISTO", 
+  "1º ANO A", "1º ANO B", "1º ANO C",
+  "2º ANO A", "2º ANO B",
+  "3º ANO A", "3º ANO B", "3º ANO C",
+  "4º ANO A", "4º ANO B", "4º ANO C",
+  "5º ANO A", "5º ANO B"
 ];
 const resources = ['TV', 'Chromebook', 'Projetor', 'Som'];
 
 const spaceData = [
   { name: "Sala Google", icon: imgSalaGoogle },
   { name: "Sala de Video", icon: imgSalaVideo },
-  { name: "Atelier Criativo", icon: imgAtelieCriativo },
-  // { name: "Brinquedoteca", icon: imgBrinquedoteca },
+  { name: "Atelier Criativo", icon: imgAtelieCriativo }
 ] as const;
 
 
@@ -63,13 +63,16 @@ function CalendarWeek() {
   const numericOffset = parseInt(weekOffset);
   const navigate = useNavigate();
   const userRole: UserRole = 'docente';
-
+  
+  
   // useState
   const [activities, setActivities] = useState<ActivityMap>({} as ActivityMap);
   const [counters, setCounters] = useState<SpaceCounters>({} as SpaceCounters);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [formData, setFormData] = useState<Activity>({ classe:'', risorse:'', spazio:'Sala Google' });
   const [showModal, setShowModal] = useState(false);
+  const { usedClasses, usedSpaces } = getUsedAtHour(activities, selectedSlot);
+
   // stato alert
   const [alert, setAlert] = useState<{type: "success" | "danger" | "warning", message: string} | null>(null);
 
@@ -110,9 +113,29 @@ function CalendarWeek() {
   //handleConfirm
   const handleConfirm = () => {
     if (!selectedSlot) return;
-    const oldAct = activities[selectedSlot];
+    // const oldAct = activities[selectedSlot];
+    const [day, time] = selectedSlot.split('-');
     const newAct = { ...formData };
     
+    const sameTimeSlots = Object.entries(activities)
+      .filter(([key]) => key.startsWith(`${day}-${time}`) && key !== selectedSlot);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const isDuplicate = sameTimeSlots.some(([_, act]) =>
+      act.classe === newAct.classe ||
+      act.risorse === newAct.risorse ||
+      act.spazio === newAct.spazio
+    );
+
+    if (isDuplicate) {
+      setAlert({ type: "danger", message: "Classe, risorsa o spazio già assegnati a quest’ora." });
+      setTimeout(() => setAlert(null), 3000);
+      return;
+    }
+
+    const oldAct = activities[selectedSlot];
+    
+    //update counter
     setCounters(prev => {
       const next = { ...prev };
       if (oldAct && oldAct.spazio !== newAct.spazio) {
@@ -177,11 +200,31 @@ function CalendarWeek() {
   const { start, end } = getWeekDates(numericOffset);
   const MAX_WEEK = 51, MIN_WEEK = 0;
   
-    useEffect(() => {
+  useEffect(() => {
     if (numericOffset < MIN_WEEK || numericOffset > MAX_WEEK) {
       navigate(`/settimana/${Math.min(Math.max(numericOffset, MIN_WEEK), MAX_WEEK)}`);
     }
   }, [numericOffset, navigate]);
+  
+  
+  // Funzione helper per calcolare classi e spazi occupati a un'ora (escludendo selectedSlot)
+  function getUsedAtHour(activities: ActivityMap, selectedSlot: string | null): { usedClasses: Set<string>, usedSpaces: Set<string> } {
+    if (!selectedSlot)
+      return { usedClasses: new Set(), usedSpaces: new Set() };
+
+    const selectedHour = selectedSlot.split('-')[1]; // estrae l'ora es. '07:20'
+
+    const usedClasses = new Set<string>();
+    const usedSpaces = new Set<string>();
+
+    for (const [key, activity] of Object.entries(activities)) {
+      if (key.endsWith(`-${selectedHour}`) && key !== selectedSlot && activity) {
+        usedClasses.add(activity.classe);
+        usedSpaces.add(activity.spazio);
+      }
+    }
+    return { usedClasses, usedSpaces };
+  }
 
   
   return (
@@ -217,66 +260,72 @@ function CalendarWeek() {
           </thead>
           <tbody>
             {timeSlots.map(time => (
-              <tr key={time}>
-                <th style={{backgroundColor: '#D6914B', color:'white'}}>{time}</th>
-                {daysOfWeek.map((day) => {
-                  const key = `${day}-${time}`;
-                  const activity = activities[key];
-                  return (
-                    <td key={key} style={{ cursor: 'pointer', height: '100px', position: 'relative' }}
-                      onClick={() => handleCellClick(key)} >
-                      {activity ? (
-                        <>
-                            {/* Puntino verde in alto a sinistra */}
-                            <div style={{
-                              position: "absolute",
-                              top: "5px",
-                              left: "5px",
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50%",
-                              backgroundColor: "red"
-                            }}></div>
-                          <div className="fw-bold">{activity.classe}</div>
-                          <div>{activity.risorse}</div>
-                          <div>{activity.spazio}</div>
-                          <div className="text-danger small mt-1">RESERVADA</div>
-                          <div className="position-absolute top-0 start-0 m-1">
-                            <span className="badge bg-danger rounded-circle" style={{ width: '10px', height: '10px' }} />
-                          </div>
-                          {userRole === 'docente' && (
-                            <Button variant="" size="sm" className="position-absolute bottom-0 end-0 m-0"
-                              onClick={e => { e.stopPropagation(); handleDelete(key); }}>
-                              <img src={imgDelete} alt="delete" style={{ height: 20 }} />
-                            </Button>
-                          )}
-                        </>
-                      ) : (
-                          <>
-                            {/* Puntino verde in alto a sinistra */}
-                            <div style={{
-                              position: "absolute",
-                              top: "5px",
-                              left: "5px",
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50%",
-                              backgroundColor: "green"
-                            }}></div>
-                            <div className="text-muted small">
-                              <strong style={{ fontFamily: "Trebuchet MS", fontSize: 16, color: "green" }}>LIVRE</strong>
-                            </div>
-                            <div className="position-absolute top-0 start-0 m-1">
-                              <span className="badge bg-success rounded-circle"
-                                style={{ backgroundColor: "green", width: '40px', height: '40px' }} />
-                            </div>
-                        </>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
+            <tr key={time}>
+              <th style={{ backgroundColor: '#D6914B', color: 'white', verticalAlign: 'middle' }} rowSpan={1}>
+                {time}
+              </th>
+              {daysOfWeek.map((day) => (
+              <td key={`${day}-${time}`} style={{ padding: 0 }}>
+              <div className="d-flex flex-column gap-1">
+                {[1, 2, 3].map((i) => {
+                const key = `${day}-${time}-${i}`;
+                const activity = activities[key];
+                return (
+                  <div key={key} style={{
+                    cursor: 'pointer', height: '85px', position: 'relative',
+                    border: '1px solid #ccc', borderRadius: 6, padding: 4,
+                    backgroundColor: activity ? '#fff0f0' : '#f0fff0'
+                    }}
+                    onClick={() => handleCellClick(key)}
+                  >
+                {/* Etichetta slot 1/4, 2/4... */}
+                <div style={{
+                  position: "absolute", top: "5px", right: "8px", fontSize: "0.65rem", color: "#999"
+                  }}>
+                  {i}/3
+                </div>
+
+                {activity ? (
+                  <>
+                    <div style={{
+                      position: "absolute", top: "5px", left: "5px", width: "10px", height: "10px",
+                      borderRadius: "50%", backgroundColor: "red"
+                    }}></div>
+                    <div className="fw-bold">{activity.classe}</div>
+                    <div>{activity.risorse}</div>
+                    <div>{activity.spazio}</div>
+                    {userRole === 'docente' && (
+                      <Button variant="" size="sm" className="position-absolute bottom-0 end-0 m-0"
+                        onClick={e => { e.stopPropagation(); handleDelete(key); }}>
+                        <img src={imgDelete} alt="delete" style={{ height: 30 }} />
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div style={{
+                      position: "absolute",
+                      top: "5px",
+                      left: "5px",
+                      width: "10px",
+                      height: "10px",
+                      borderRadius: "50%",
+                      backgroundColor: "green"
+                      }}>
+                    </div>
+                    <div className='position-livre'>
+                      <strong style={{ fontFamily: "Trebuchet MS", fontSize: 14, color: "green" }}>LIVRE</strong>
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </td>
+    ))}
+  </tr>
+))}
           </tbody>
           <thead>
             <tr>
@@ -343,23 +392,41 @@ function CalendarWeek() {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Turma</Form.Label>
-              <Form.Select value={formData.classe} onChange={e => setFormData({ ...formData, classe: e.target.value })}>
+              <Form.Select
+                value={formData.classe}
+                onChange={e => setFormData({ ...formData, classe: e.target.value })}
+              >
                 <option value=""> Selecione uma turma</option>
-                {classes.map(c => <option key={c}>{c}</option>)}
+                {classes.map(c =>
+                  <option key={c} value={c} disabled={usedClasses.has(c)}>
+                    {c} {usedClasses.has(c) ? ' (ocupada)' : ''}
+                  </option>)}
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Recurso</Form.Label>
-              <Form.Select value={formData.risorse} onChange={e => setFormData({ ...formData, risorse: e.target.value })}>
+              <Form.Select value={formData.risorse}
+                onChange={e => setFormData({ ...formData, risorse: e.target.value })}>
                 <option value="">Selecione um recurso</option>
-                {resources.map(r => <option key={r}>{r}</option>)}
+                {resources.map(r =>
+                  <option
+                    key={r} value={r}>{r}
+                  </option>)}
               </Form.Select>
             </Form.Group>
             <Form.Group>
               <Form.Label>Espaço</Form.Label>
-              <Form.Select value={formData.spazio} onChange={(e) => setFormData({ ...formData, spazio: e.target.value as Spazio })}>
+              <Form.Select
+                className='select-espaco'
+                value={formData.spazio}
+                onChange={(e) => setFormData({ ...formData, spazio: e.target.value as Spazio })}
+              >
                 <option value="">Selecione um espaço</option>
-                {spaces.map(s => <option key={s}>{s}</option>)}
+                {spaces.map(s => (
+                  <option key={s} value={s} disabled={usedSpaces.has(s)}>
+                    {s} {usedSpaces.has(s) ? ' (ocupado)' : ''}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
           </Form>

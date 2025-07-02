@@ -112,3 +112,20 @@
   70%  { transform: scale(1.1) rotate(-5deg); }
   100% { transform: scale(1) rotate(0deg); }
 }
+
+
+.position-livre {
+    position: relative;
+    top: 30px;
+}
+
+
+.select-espaco {
+
+}
+
+option:disabled {
+  color: #999;
+  font-style: italic;
+  background-color: #f5f5f5;
+}
