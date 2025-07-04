@@ -249,7 +249,7 @@ function CalendarWeek() {
       </div>
 
       <div className="table-responsive"  style={{marginTop:40}}>
-        <table className="table table-bordered text-center align-middle" style={{ minWidth: '800px' }}>
+        <table className="table table-bordered text-center align-middle" style={{ minWidth: '800px'}}>
           <thead>
             <tr>
               <th style={{ backgroundColor: '#32bba5', color: 'white' }}>Horário</th>
@@ -265,14 +265,14 @@ function CalendarWeek() {
                 {time}
               </th>
               {daysOfWeek.map((day) => (
-              <td key={`${day}-${time}`} style={{ padding: 0 }}>
-              <div className="d-flex flex-column gap-1">
+              <td key={`${day}-${time}`} style={{ padding: 20 }}>
+              <div className="d-flex flex-column gap-3">
                 {[1, 2, 3].map((i) => {
                 const key = `${day}-${time}-${i}`;
                 const activity = activities[key];
                 return (
                   <div key={key} style={{
-                    cursor: 'pointer', height: '85px', position: 'relative',
+                    cursor: 'pointer', height: '85px', width: "200px", position: 'relative',
                     border: '1px solid #ccc', borderRadius: 6, padding: 4,
                     backgroundColor: activity ? '#fff0f0' : '#f0fff0'
                     }}
