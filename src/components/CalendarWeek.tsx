@@ -3,7 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../components/calendarWeek.css";
+import "./calendarWeek.css";
 
 // Utility
 import { getWeekDates } from '../utils/dateUtils';
@@ -303,15 +303,33 @@ function CalendarWeek() {
                   </>
                 ) : (
                   <>
-                    <div style={{
-                      position: "absolute",
-                      top: "5px",
-                      left: "5px",
-                      width: "10px",
-                      height: "10px",
-                      borderRadius: "50%",
-                      backgroundColor: "green"
-                      }}>
+                    <div className='slot'
+                      style={{
+                        position: "absolute",
+                        top: "5px",
+                        left: "5px",
+                        width: "10px",
+                        height: "10px",
+                        borderRadius: "50%",
+                        backgroundColor: "green",
+                        boxShadow: "0 0 0 rgba(0, 255, 0, 0.7)",
+                        animation: "pulse 2s infinite"
+                      }} >
+                      <style>
+                        {`
+                          @keyframes pulse {
+                            0% {
+                              box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7);
+                            }
+                            70% {
+                              box-shadow: 0 0 0 10px rgba(0, 255, 0, 0);
+                            }
+                            100% {
+                              box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+                            }
+                          }
+                        `}
+                      </style>
                     </div>
                     <div className='position-livre'>
                       <strong style={{ fontFamily: "Trebuchet MS", fontSize: 14, color: "green" }}>LIVRE</strong>
