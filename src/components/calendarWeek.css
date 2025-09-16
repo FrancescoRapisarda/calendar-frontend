@@ -57,6 +57,40 @@
     z-index: 2;
 }
 
+.imgAugustoLivre {
+    position: relative;
+    width: 60px;
+    margin-top: -20px;
+}
+
+
+.rotating {
+  transform-origin: center;
+  animation: spin 4s infinite; /* 4s = 1 ciclo di animazione + pausa */
+}
+
+/* Keyframes della rotazione */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(30deg);
+    animation-timing-function: cubic-bezier(0.50, 1, 0.50, 1); 
+  }
+  40% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.50, 1, 0.50, 1);
+  }
+  60% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
 .buttonWeekLeft {
     height: 45px;
     margin: 10px; 

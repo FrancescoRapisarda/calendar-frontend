@@ -25,6 +25,7 @@ import imgSalaDeAula from "../assets/img/salaDeAula.png";
 import imgBrinquedoteca from "../assets/img/brinquedoteca.png";
 import imgCorredores from "../assets/img/corredores.png";
 import imgAreaExterna from "../assets/img/areaExterna.png";
+import imgAugustoLivre from "../assets/img/augusto-livre.png";
 
 
 // Costanti
@@ -340,8 +341,9 @@ function CalendarWeek() {
                         `}
                       </style>
                     </div>
-                    <div className='position-livre'>
-                      <strong style={{ fontFamily: "Trebuchet MS", fontSize: 14, color: "green" }}>LIVRE</strong>
+                          <div className='position-livre rotating'>
+                            <img className='imgAugustoLivre' src={imgAugustoLivre} alt="livre" />
+                      {/* <strong style={{ fontFamily: "Trebuchet MS", fontSize: 14, color: "green" }}>LIVRE</strong> */}
                     </div>
                   </>
                 )}
