@@ -21,6 +21,10 @@ import imgSaveAtivitade from "../assets/img/floppy-disk.png";
 import imgSalaGoogle from "../assets/img/google-meet.jpg";
 import imgSalaVideo from "../assets/img/projector.jpg";
 import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
+import imgSalaDeAula from "../assets/img/salaDeAula.png";
+import imgBrinquedoteca from "../assets/img/brinquedoteca.png";
+import imgCorredores from "../assets/img/corredores.png";
+import imgAreaExterna from "../assets/img/areaExterna.png";
 
 
 // Costanti
@@ -30,19 +34,24 @@ const CURRENT_YEAR = new Date().getFullYear();
 const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
 const timeSlots = ['07:20', '08:10', '09:00', '09:20', '10:10', '11:00', '13:10', '14:00', '14:50', '15:10', '16:00'];
 const classes = [
-  "PRE' I", "PRE' II", "PRE MISTO", 
+  "GESTÃO",
+  "PRE' IA", "PRE' IB", "PRE' II", 
   "1º ANO A", "1º ANO B", "1º ANO C",
   "2º ANO A", "2º ANO B",
   "3º ANO A", "3º ANO B", "3º ANO C",
   "4º ANO A", "4º ANO B", "4º ANO C",
   "5º ANO A", "5º ANO B"
 ];
-const resources = ['TV', 'Chromebook', 'Projetor', 'Som'];
+const resources = ['TV', 'Chromebook', 'Projetor', 'Som', 'Nenhum'];
 
 const spaceData = [
   { name: "Sala Google", icon: imgSalaGoogle },
   { name: "Sala de Video", icon: imgSalaVideo },
-  { name: "Atelier Criativo", icon: imgAtelieCriativo }
+  { name: "Atelier Criativo", icon: imgAtelieCriativo },
+  { name: "Sala de Aula", icon: imgSalaDeAula },
+  { name: "Brinquedoteca", icon: imgBrinquedoteca },
+  { name: "Corredores", icon: imgCorredores },
+  { name: "Area Externa", icon: imgAreaExterna },
 ] as const;
 
 
@@ -53,7 +62,7 @@ const icons: Record<Space, string> = Object.fromEntries(spaceData.map(s => [s.na
 
 
 type UserRole = 'admin' | 'docente';
-type Spazio = "Sala Google" | "Sala de Video" | "Atelier Criativo";
+type Spazio = "Sala Google" | "Sala de Video" | "Atelier Criativo" | "Sala de Aula" | "Brinquedoteca" | "Corredores" | "Area Externa";
 type Activity = { classe: string; risorse: string; spazio: Spazio};
 type ActivityMap = {[slot: string]: Activity;};
 
