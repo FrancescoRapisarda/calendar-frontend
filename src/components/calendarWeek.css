@@ -162,6 +162,37 @@ option:disabled {
 }
 
 
+.list-contador-espacos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  margin: 20px;
+  border-radius: 40px;
+  padding: 20px;
+
+/* Sfondo effetto pennarello */
+  background: linear-gradient(135deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff);
+  background-size: 400% 400%;
+  animation: gradientMove 8s ease infinite;
+
+  /* Ombra morbida per effetto pennarello su carta */
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+
+  /* Font “mano libera” */
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Animazione gradienti per effetto vivace */
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+
 
 /* Etichetta slot 1/3, 2/3 3/3 */
 

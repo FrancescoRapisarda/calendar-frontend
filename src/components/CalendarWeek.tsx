@@ -18,7 +18,7 @@ import imgArrow from "../assets/img/next.png";
 import imgHead from "../assets/img/photos-head.png";
 import imgAtivitadeEscolar from "../assets/img/atividade-escolar.png";
 import imgSaveAtivitade from "../assets/img/floppy-disk.png";
-import imgSalaGoogle from "../assets/img/google-meet.jpg";
+import imgSalaGoogle from "../assets/img/salaGoogle.png";
 import imgSalaVideo from "../assets/img/projector.jpg";
 import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
 import imgSalaDeAula from "../assets/img/salaDeAula.png";
@@ -394,9 +394,9 @@ function CalendarWeek() {
         </h6>
         <ul className="list-group mt-4">
           {(Object.keys(counters) as Spazio[]).map((space) => (
-            <li key={space} className="list-group-item d-flex justify-content-between align-items-center" style={{ fontFamily: 'Allan'}}>
+            <li key={space} className="list-contador-espacos" style={{ fontFamily: 'Allan'}}>
               <div className="d-flex align-items-center gap-2">
-                <img src={icons[space]} alt={space} style={{ width: 100, height: 80, borderRadius: '10%' }}/>
+                <img src={icons[space]} alt={space} style={{ width: 100, height: 80,borderRadius: '10%', border: '1px solid black' }}/>
                 <span style={{fontSize: 22}}>{space}</span>
               </div>
               <span style={{ fontSize: '2.0rem' }}>
