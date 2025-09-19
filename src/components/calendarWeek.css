@@ -166,18 +166,13 @@ option:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
   margin: 20px;
   border-radius: 40px;
   padding: 20px;
-
-/* Sfondo effetto pennarello */
-  background: linear-gradient(135deg, #ffb3ba, #ffdfba, #ffffba, #baffc9, #bae1ff);
-  background-size: 400% 400%;
-  animation: gradientMove 8s ease infinite;
+  background: linear-gradient(135deg, #ffdfba, #ffffba, #bae1ff);
 
   /* Ombra morbida per effetto pennarello su carta */
-  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 4px 4px 20px rgba(0,0,0,0.5);
 
   /* Font “mano libera” */
   font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;

@@ -26,6 +26,7 @@ import imgBrinquedoteca from "../assets/img/brinquedoteca.png";
 import imgCorredores from "../assets/img/corredores.png";
 import imgAreaExterna from "../assets/img/areaExterna.png";
 import imgAugustoLivre from "../assets/img/augusto-livre.png";
+import AnimatedCounter from './AnimatedCounter';
 
 
 // Costanti
@@ -399,8 +400,7 @@ function CalendarWeek() {
                 <img src={icons[space]} alt={space} style={{ width: 100, height: 80,borderRadius: '10%', border: '1px solid black' }}/>
                 <span style={{fontSize: 22}}>{space}</span>
               </div>
-              <span style={{ fontSize: '2.0rem' }}>
-                {counters[space] || 0}</span>
+              <span style={{ fontSize: '2.0rem' }}> <AnimatedCounter value={counters[space] || 0} /></span>
             </li>
           ))}
         </ul>
