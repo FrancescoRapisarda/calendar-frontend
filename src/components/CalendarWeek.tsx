@@ -25,7 +25,7 @@ import imgSalaDeAula from "../assets/img/salaDeAula.png";
 import imgBrinquedoteca from "../assets/img/brinquedoteca.png";
 import imgCorredores from "../assets/img/corredores.png";
 import imgAreaExterna from "../assets/img/areaExterna.png";
-import imgAugustoLivre from "../assets/img/augusto-livre.png";
+// import imgAugustoLivre from "../assets/img/augusto-livre.png";
 import AnimatedCounter from './AnimatedCounter';
 
 
@@ -343,8 +343,8 @@ function CalendarWeek() {
                       </style>
                     </div>
                           <div className='position-livre rotating'>
-                            <img className='imgAugustoLivre' src={imgAugustoLivre} alt="livre" />
-                      {/* <strong style={{ fontFamily: "Trebuchet MS", fontSize: 14, color: "green" }}>LIVRE</strong> */}
+                            {/* <img className='imgAugustoLivre' src={imgAugustoLivre} alt="livre" /> */}
+                          <strong style={{ fontFamily: 'sans-serif', fontSize: 14, color: 'GrayText' }}>+ Adicionar atividade</strong>
                     </div>
                   </>
                 )}
