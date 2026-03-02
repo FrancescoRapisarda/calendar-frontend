@@ -5,7 +5,7 @@ import {  BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-
 
 const getCurrentWeekOffset = () => {
   const today = new Date();
-  const start = new Date(2025, 0, 6); // 6 Gennaio 2025
+  const start = new Date(2026, 0, 5); // 6 Gennaio 2025
   const daysDiff = Math.floor((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
   return Math.floor(daysDiff / 7);
 };

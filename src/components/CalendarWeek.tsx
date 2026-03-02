@@ -25,7 +25,6 @@ import imgSalaDeAula from "../assets/img/salaDeAula.png";
 import imgBrinquedoteca from "../assets/img/brinquedoteca.png";
 import imgCorredores from "../assets/img/corredores.png";
 import imgAreaExterna from "../assets/img/areaExterna.png";
-// import imgAugustoLivre from "../assets/img/augusto-livre.png";
 import AnimatedCounter from './AnimatedCounter';
 
 
