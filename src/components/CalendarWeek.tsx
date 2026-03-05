@@ -5,12 +5,14 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./calendarWeek.css";
 
+
 // Utility
 import { getWeekDates } from '../utils/dateUtils';
 // import { ActivityMap } from "../types/activityMap"; 
 import { SpaceCounters } from "../types/spaceCounters";
+import AnimatedCounter from './AnimatedCounter';
 
-// Immagini
+// Img
 import imgAugusto from "../assets/img/augusto-school.png";
 import imgPrato from "../assets/img/prato-scontornato.png";
 import imgDelete from "../assets/img/remove.png";
@@ -18,14 +20,14 @@ import imgArrow from "../assets/img/next.png";
 import imgHead from "../assets/img/photos-head.png";
 import imgAtivitadeEscolar from "../assets/img/atividade-escolar.png";
 import imgSaveAtivitade from "../assets/img/floppy-disk.png";
-import imgSalaGoogle from "../assets/img/salaGoogle.png";
-import imgSalaVideo from "../assets/img/projector.jpg";
-import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
 import imgSalaDeAula from "../assets/img/salaDeAula.png";
+import imgAtelieCriativo from "../assets/img/atelie-criativo.jpg";
+import imgAuditorio from "../assets/img/auditorio.png";
+import imgQuadra from "../assets/img/quadra.png"; 
+import imgSalaGoogle from "../assets/img/salaGoogle.png";
 import imgBrinquedoteca from "../assets/img/brinquedoteca.png";
-import imgCorredores from "../assets/img/corredores.png";
+import imgBiblioteca from "../assets/img/biblioteca.png";
 import imgAreaExterna from "../assets/img/areaExterna.png";
-import AnimatedCounter from './AnimatedCounter';
 
 
 // Costanti
@@ -33,26 +35,27 @@ import AnimatedCounter from './AnimatedCounter';
 const API_URL = "https://calendar-backend-r54r.onrender.com/api/weeks"
 const CURRENT_YEAR = new Date().getFullYear();
 const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
-const timeSlots = ['07:20', '08:10', '09:00', '09:20', '10:10', '11:00', '13:10', '14:00', '14:50', '15:10', '16:00'];
+const timeSlots = ['07:20', '08:10', '09:00', '09:20', '10:10', '11:00', '11:50',  '13:10', '14:00', '14:50', '15:10', '16:00'];
 const classes = [
-  "GESTÃO",
-  "PRE' IA", "PRE' IB", "PRE' II", 
-  "1º ANO A", "1º ANO B", "1º ANO C",
-  "2º ANO A", "2º ANO B",
-  "3º ANO A", "3º ANO B", "3º ANO C",
-  "4º ANO A", "4º ANO B", "4º ANO C",
-  "5º ANO A", "5º ANO B"
+  "• Infantil V A", "• Infantil V B",
+  "• 1º ANO A", "• 1º ANO B", "• 1º ANO C",
+  "• 2º ANO A", "• 2º ANO B", "• 2º ANO C",
+  "• 3º ANO A", "• 3º ANO B",
+  "• 4º ANO A", "• 4º ANO B", "• 4º ANO C",
+  "• 5º ANO A", "• 5º ANO B", "• 5º ANO C",
+  "GESTÃO"
 ];
 const resources = ['TV', 'Chromebook', 'Projetor', 'Som', 'Nenhum'];
 
 const spaceData = [
-  { name: "Sala Google", icon: imgSalaGoogle },
-  { name: "Sala de Video", icon: imgSalaVideo },
-  { name: "Atelier Criativo", icon: imgAtelieCriativo },
   { name: "Sala de Aula", icon: imgSalaDeAula },
+  { name: "Ateliê Criativo", icon: imgAtelieCriativo },
+  { name: "Auditório", icon: imgAuditorio },
+  { name: "Quadra", icon: imgQuadra },
+  { name: "Sala Google", icon: imgSalaGoogle },
   { name: "Brinquedoteca", icon: imgBrinquedoteca },
-  { name: "Corredores", icon: imgCorredores },
-  { name: "Area Externa", icon: imgAreaExterna },
+  { name: "Biblioteca", icon: imgBiblioteca },
+  { name: "Área externa", icon: imgAreaExterna },
 ] as const;
 
 
@@ -63,7 +66,7 @@ const icons: Record<Space, string> = Object.fromEntries(spaceData.map(s => [s.na
 
 
 type UserRole = 'admin' | 'docente';
-type Spazio = "Sala Google" | "Sala de Video" | "Atelier Criativo" | "Sala de Aula" | "Brinquedoteca" | "Corredores" | "Area Externa";
+type Spazio = "Sala de Aula" | "Ateliê Criativo" | "Auditório" | "Quadra" | "Sala Google" | "Brinquedoteca" | "Biblioteca" | "Área externa";
 type Activity = { classe: string; risorse: string; spazio: Spazio};
 type ActivityMap = {[slot: string]: Activity;};
 
@@ -166,7 +169,7 @@ function CalendarWeek() {
   };
   
   
-  //handledelete
+  //handleDelete
   const handleDelete = (slot: string) => {
     const oldAct = activities[slot];
     if (!oldAct) return;
@@ -184,20 +187,15 @@ function CalendarWeek() {
   //handleSave
     const handleSave = async () => {
       if (!activities || Object.keys(activities).length === 0) {
-       setAlert({ type: "warning", message: "Nessuna attività da salvare." });
-       // nascondi alert dopo 3 secondi
-      setTimeout(() => setAlert(null), 3000);
-      // alert("Nessuna attività da salvare.");
+       setAlert({ type: "warning", message: " Nenhuma atividade salva" });
+      setTimeout(() => setAlert(null), 5000);
       return;
     }
     try {
       await axios.post(`${API_URL}/${numericOffset}`, { activities });
-      setAlert({ type: "success", message: "Atividades e contadores salvos com sucesso!" });
-       // nascondi alert dopo 3 secondi
-      setTimeout(() => setAlert(null), 3000);
-      // alert("Attività salvate con successo!");
+      setAlert({ type: "success", message: "Dados salvos com sucesso!" });
+      setTimeout(() => setAlert(null), 5000);
       await axios.post(`${API_URL}/counters/${CURRENT_YEAR}`, counters);
-      // alert("Attività e contatori salvati con successo!");
     } catch(err) {
       console.error("Errore nel salvataggio:", err);
        setAlert({ type: "danger", message: "Errore durante il salvataggio." });
@@ -242,10 +240,10 @@ function CalendarWeek() {
       <div>
         <img style={{ maxWidth: "100%", width:420, marginTop: -50}} src={imgHead} alt="head" />
       </div>
-      <div className='title-calendar'>
+      <div className='betania-patmos-regular'>
         Escola Municipal<br />Augusto Dos Anjos
       </div>
-        <div className='sub-title-calendar'>Atividades Escolares</div>
+        <div className='fredericka-the-great-regular'>Atividades Escolares</div>
         <div className='augusto-prato'>
           <img className='img-augusto' src={imgAugusto} alt="augusto" />
           <div style={{marginTop: -150}}>
@@ -254,28 +252,28 @@ function CalendarWeek() {
       </div>
       <div className="d-flex justify-content-between align-items-center mb-3" style={{marginTop:450}}>
         <img src={imgArrow} alt="precendente" className='buttonWeekLeft' onClick={() => navigate(`/settimana/${numericOffset-1}`)} />
-        <h5 className="scroll-week mb-0">Semana <strong style={{color:"red"}}>de</strong> {start} <strong style={{color:"red"}}>a</strong> {end}</h5>
+        <h5 className="ojuju-semana-skip">Semana <strong style={{color:"red"}}>de</strong> {start} <strong style={{color:"red"}}>a</strong> {end}</h5>
         <img src={imgArrow} alt="successivo" className='buttonWeekRight' onClick={() => navigate(`/settimana/${numericOffset+1}`)} />
       </div>
 
-      <div className="table-responsive"  style={{marginTop:40}}>
-        <table className="table table-bordered text-center align-middle" style={{ minWidth: '800px'}}>
+      <div className="table-responsive"  style={{marginTop:40 }}>
+        <table className="table table-bordered text-center align-middle" style={{ minWidth: '800px' }}>
           <thead>
-            <tr>
-              <th style={{ backgroundColor: '#32bba5', color: 'white' }}>Horário</th>
+            <tr style={{border:0}}>
+              <th style={{ backgroundColor: '	#4682b4', color: 'white', borderRadius: 30 }}>Horário</th>
               {daysOfWeek.map((day) =>
-                <th key={day} style={{ backgroundColor: '#32bba5', color: 'white' }} >{day}</th>
+                <th key={day} style={{ backgroundColor: '#90ee90', color: 'white', borderRadius: 30 }} >{day}</th>
               )}
             </tr>
           </thead>
           <tbody>
             {timeSlots.map(time => (
-            <tr key={time}>
-              <th style={{ backgroundColor: '#D6914B', color: 'white', verticalAlign: 'middle' }} rowSpan={1}>
+            <tr style={{ border: 0 }} key={time}>
+              <th className='verticalTextHour' style={{ backgroundColor: '	#4682b4', color: 'white', borderRadius:50, fontSize: 20 }} rowSpan={1}>
                 {time}
               </th>
               {daysOfWeek.map((day) => (
-              <td key={`${day}-${time}`} style={{ padding: 20 }}>
+              <td key={`${day}-${time}`} style={{ padding: 30}}>
               <div className="d-flex flex-column gap-3">
                 {[1, 2, 3].map((i) => {
                 const key = `${day}-${time}-${i}`;
@@ -283,8 +281,8 @@ function CalendarWeek() {
                 return (
                   <div key={key} style={{
                     cursor: 'pointer', height: '85px', width: "200px", position: 'relative',
-                    border: '1px solid #ccc', borderRadius: 6, padding: 4,
-                    backgroundColor: activity ? '#fff0f0' : '#f0fff0'
+                    border: '3px solid #f8f8ff', borderRadius: 6, padding: 4,
+                    backgroundColor: activity ? '#fff0f0' : '#f0fff0',
                     }}
                     onClick={() => handleCellClick(key)}
                   >
@@ -342,8 +340,7 @@ function CalendarWeek() {
                       </style>
                     </div>
                           <div className='position-livre rotating'>
-                            {/* <img className='imgAugustoLivre' src={imgAugustoLivre} alt="livre" /> */}
-                          <strong style={{ fontFamily: 'sans-serif', fontSize: 14, color: 'GrayText' }}>+ Adicionar atividade</strong>
+                          <strong className='quicksand-adicionar-atividade'>+ Adicionar atividade</strong>
                     </div>
                   </>
                 )}
@@ -357,9 +354,9 @@ function CalendarWeek() {
 ))}
           </tbody>
           <thead>
-            <tr>
-              <th style={{ backgroundColor: '#32bba5', color: 'white' }}>Horário</th>
-              {daysOfWeek.map((day) => <th style={{ backgroundColor: '#32bba5', color: 'white' }} key={day}>{day}
+            <tr style={{ border: 0 }}>
+              <th style={{ backgroundColor: '	#4682b4', color: 'white', borderRadius:50, fontSize: 15 }}>Horário</th>
+              {daysOfWeek.map((day) => <th style={{ backgroundColor: '#90ee90', color: 'white', borderRadius: 30 }} key={day}>{day}
               </th>)}
             </tr>
           </thead>
@@ -369,7 +366,7 @@ function CalendarWeek() {
       <div className="img-save-ativitade mt-3 text-end">
         <img
           className="img-save"
-          style={{ marginTop: 20, width: 60 }}
+          style={{ marginTop: 20, width: 100 }}
           src={imgSaveAtivitade}
           alt="save-ativitade"
           onClick={handleSave}
@@ -389,17 +386,17 @@ function CalendarWeek() {
       </div>
 
       <div className="mt-5">
-        <h6 className='contador-espacos' style={{ textTransform: 'uppercase' }}>
-          Contador de uso dos espaços <br /> (anual)
+        <h6 className='graduate-regular' style={{ textTransform: 'uppercase' }}>
+          Contador de uso dos espaços <br /> 2026
         </h6>
         <ul className="list-group mt-4">
           {(Object.keys(counters) as Spazio[]).map((space) => (
             <li key={space} className="list-contador-espacos" style={{ fontFamily: 'Allan'}}>
-              <div className="d-flex align-items-center gap-2">
-                <img src={icons[space]} alt={space} style={{ width: 100, height: 80,borderRadius: '10%', border: '1px solid black' }}/>
-                <span style={{fontSize: 22}}>{space}</span>
+              <div className="d-flex align-items-center gap-2 tektur-card-espaco">
+                <img src={icons[space]} alt={space} style={{ width: 100, height: 80,borderRadius: 30 }}/>
+                <span style={{fontSize: 24}}>{space}</span>
               </div>
-              <span style={{ fontSize: '2.0rem' }}> <AnimatedCounter value={counters[space] || 0} /></span>
+              <span className='tektur-card-espaco' style={{ fontSize: '2.0rem' }}> <AnimatedCounter value={counters[space] || 0} /></span>
             </li>
           ))}
         </ul>
@@ -449,7 +446,7 @@ function CalendarWeek() {
                 value={formData.spazio}
                 onChange={(e) => setFormData({ ...formData, spazio: e.target.value as Spazio })}
               >
-                <option value="">Selecione um espaço</option>
+                <option value="">Ambientes de Aprendizagem</option>
                 {spaces.map(s => (
                   <option key={s} value={s} disabled={usedSpaces.has(s)}>
                     {s} {usedSpaces.has(s) ? ' (ocupado)' : ''}

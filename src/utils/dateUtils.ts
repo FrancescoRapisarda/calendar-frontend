@@ -1,5 +1,5 @@
 export function getWeekDates(offset: number): { start: string; end: string } {
-  const baseDate = new Date(2026, 0, 5); // Lunedì 6 gennaio 2025
+  const baseDate = new Date(2026, 0, 5); // Lunedì 5 gennaio 2026
   const monday = new Date(baseDate);
   monday.setDate(baseDate.getDate() + offset * 7);
   const friday = new Date(monday);

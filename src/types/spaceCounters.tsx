@@ -1,12 +1,12 @@
 export interface SpaceCounters {
-    // "Brinquedoteca": number;
-    "Sala Google": number;
-    "Sala de Video": number;
-    "Atelier Criativo": number;
     "Sala de Aula": number;
+    "Ateliê Criativo": number;
+    "Auditório": number;
+    "Quadra": number;
+    "Sala Google": number;
     "Brinquedoteca": number;
-    "Corredores": number;
-    "Area Externa": number;
+    "Biblioteca": number;
+    "Área externa": number;
 }
 
 export type Space = keyof SpaceCounters;
